@@ -14,7 +14,7 @@
     <a href="/login">ログインページへ</a>
     {% else %}
     <h5>ログイン中のユーザー：{{current_user.username}}</h5>
-    <a href="/logout" type="submit">ログアウト</a>
+    <a href="/logout">ログアウト</a>
     {% endif %}
     {% block content %}
     {% endblock %}

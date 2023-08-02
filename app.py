@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
@@ -16,6 +16,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), nullable=False)
     body = db.Column(db.String(140), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    user = db.relationship('User', backref='posts')
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,7 +40,7 @@ def create():
         title = request.form.get('title')
         body = request.form.get('body')
 
-        post = Post(title=title,body=body)
+        post = Post(title=title,body=body,user_id=current_user.get_id())
         # DBに値を送り保存する
         db.session.add(post)
         db.session.commit()

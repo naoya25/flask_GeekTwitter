@@ -4,7 +4,10 @@
     <a href="/new">新規作成画面</a>
     {% for post in posts %}
     <div>
-        <p>{{post.id}} : <b>{{post.title}}</b> {{post.body}}</p>
+        {%if post.user%}
+        <p>投稿者 : {{post.user.username}}</p>
+        {%endif%}
+        <p><b>{{post.title}}</b> {{post.body}}</p>
         <a href="{{post.id}}/edit">編集</a>
         <a href="{{post.id}}/delete">削除</a>
     </div>
