@@ -34,6 +34,7 @@ def index():
     return render_template('index.html',posts = posts)
 
 @app.route('/new',methods=['GET','POST'])
+@login_required
 def create():
     if request.method == 'POST':
         # POSTメソッドの時の処理。
@@ -50,6 +51,7 @@ def create():
         return render_template('new.html')
 
 @app.route('/<int:id>/edit',methods=['GET','POST'])
+@login_required
 def update(id):
     post = Post.query.get(id)
     if request.method == 'GET':
@@ -61,6 +63,7 @@ def update(id):
         return redirect('/')
 
 @app.route('/<int:id>/delete',methods=['GET'])
+@login_required
 def delete(id):
     post = Post.query.get(id)
     #投稿を削除
